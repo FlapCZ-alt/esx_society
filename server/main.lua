@@ -324,14 +324,14 @@ ESX.RegisterServerCallback('esx_society:getVehiclesInGarage', function(source, c
 	end)
 end)
 
-ESX.RegisterServerCallback('esx_society:isBoss', function(source, cb, job)
-	cb(isPlayerBoss(source, job))
+ESX.RegisterServerCallback('esx_society:isBoss', function(source, cb, job, accesToBossmenu)
+	cb(isPlayerBoss(source, job, accesToBossmenu))
 end)
 
-function isPlayerBoss(playerId, job)
+function isPlayerBoss(playerId, job, accesToBossmenu)
 	local xPlayer = ESX.GetPlayerFromId(playerId)
 
-	if xPlayer.job.name == job and xPlayer.job.grade_name == 'boss' then
+	if xPlayer.job.name == job and accesToBossmenu then
 		return true
 	else
 		print(('esx_society: %s attempted open a society boss menu!'):format(xPlayer.identifier))

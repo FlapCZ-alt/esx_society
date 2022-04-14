@@ -72,12 +72,12 @@ function UpdateSocietyMoneyHUDElement(money)
 	TriggerEvent('esx_society:setSocietyMoney', money)
 end
 
-function OpenBossMenu(society, close, options)
+function OpenBossMenu(accesToBossmenu, society, close, options)
 	options = options or {}
 	local elements = {}
 
 	ESX.TriggerServerCallback('esx_society:isBoss', function(isBoss)
-		if isBoss then
+		if accesToBossmenu then
 			local defaultOptions = {
 				withdraw = true,
 				deposit = true,
@@ -173,7 +173,7 @@ function OpenBossMenu(society, close, options)
 				end
 			end)
 		end
-	end, society)
+	end, society, accesToBossmenu)
 end
 
 function OpenManageEmployeesMenu(society)
@@ -356,6 +356,6 @@ function OpenManageGradesMenu(society)
 	end, society)
 end
 
-AddEventHandler('esx_society:openBossMenu', function(society, close, options)
-	OpenBossMenu(society, close, options)
+AddEventHandler('esx_society:openBossMenu', function(isBoss, society, close, options)
+	OpenBossMenu(isBoss, society, close, options)
 end)
