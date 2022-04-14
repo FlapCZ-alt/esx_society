@@ -62,11 +62,10 @@ end)
 RegisterServerEvent('esx_society:withdrawMoney')
 AddEventHandler('esx_society:withdrawMoney', function(societyName, amount)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	local society = GetSociety(societyName)
 	amount = ESX.Math.Round(tonumber(amount))
 
-	if xPlayer.job.name == society.name then
-		TriggerEvent('esx_addonaccount:getSharedAccount', society.account, function(account)
+	if xPlayer.job.name == societyName then
+		TriggerEvent('esx_addonaccount:getSharedAccount', "society_"..societyName, function(account)
 			if amount > 0 and account.money >= amount then
 				account.removeMoney(amount)
 				xPlayer.addMoney(amount)
@@ -83,12 +82,11 @@ end)
 RegisterServerEvent('esx_society:depositMoney')
 AddEventHandler('esx_society:depositMoney', function(societyName, amount)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	local society = GetSociety(societyName)
 	amount = ESX.Math.Round(tonumber(amount))
 
-	if xPlayer.job.name == society.name then
+	if xPlayer.job.name == societyName then
 		if amount > 0 and xPlayer.getMoney() >= amount then
-			TriggerEvent('esx_addonaccount:getSharedAccount', society.account, function(account)
+			TriggerEvent('esx_addonaccount:getSharedAccount', "society_"..societyName, function(account)
 				xPlayer.removeMoney(amount)
 				xPlayer.showNotification(_U('have_deposited', ESX.Math.GroupDigits(amount)))
 				account.addMoney(amount)
